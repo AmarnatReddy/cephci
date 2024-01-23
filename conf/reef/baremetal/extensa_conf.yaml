@@ -53,19 +53,19 @@ globals:
       - /dev/sdc
       - /dev/sdd
       - /dev/sde
-    - hostname: extensa007
-      id: node6
-      ip: 10.8.130.207
-      role:
-      - osd
-      - rgw
-      - nfs
-      root_password: passwd
-      volumes:
-      - /dev/sdb
-      - /dev/sdc
-      - /dev/sdd
-      - /dev/sde
+#    - hostname: extensa007
+#      id: node6
+#      ip: 10.8.130.207
+#      role:
+#      - osd
+#      - rgw
+#      - nfs
+#      root_password: passwd
+#      volumes:
+#      - /dev/sdb
+#      - /dev/sdc
+#      - /dev/sdd
+#      - /dev/sde
     - hostname: extensa008
       id: node7
       ip: 10.8.130.208
@@ -107,12 +107,12 @@ globals:
       role:
       - client
       root_password: passwd
-    - hostname: extensa013
-      id: node11
-      ip: 10.8.130.213
-      role:
-      - client
-      root_password: passwd
+#    - hostname: extensa013
+#      id: node11
+#      ip: 10.8.130.213
+#      role:
+#      - client
+#      root_password: passwd
     - hostname: extensa014
       id: node12
       ip: 10.8.130.214
@@ -126,19 +126,19 @@ globals:
       - /dev/sdc
       - /dev/sda
       - /dev/sde
-    - hostname: extensa015
-      id: node13
-      ip: 10.8.130.215
-      role:
-      - osd
-      - mon
-      - mgr
-      root_password: passwd
-      volumes:
-      - /dev/sda
-      - /dev/sdb
-      - /dev/sdc
-      - /dev/sde
+#    - hostname: extensa015
+#      id: node13
+#      ip: 10.8.130.215
+#      role:
+#      - osd
+#      - mon
+#      - mgr
+#      root_password: passwd
+#      volumes:
+#      - /dev/sda
+#      - /dev/sdb
+#      - /dev/sdc
+#      - /dev/sde
     - hostname: extensa016
       id: node14
       ip: 10.8.130.216
@@ -164,12 +164,12 @@ globals:
       - /dev/sdc
       - /dev/sdd
       - /dev/sde
-    - hostname: extensa018
-      id: node16
-      ip: 10.8.130.218
-      role:
-      - client
-      root_password: passwd
+#    - hostname: extensa018
+#      id: node16
+#      ip: 10.8.130.218
+#      role:
+#      - client
+#      root_password: passwd
     - hostname: extensa019
       id: node17
       ip: 10.8.130.219

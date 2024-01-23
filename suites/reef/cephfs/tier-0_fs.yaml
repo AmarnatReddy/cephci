@@ -94,7 +94,11 @@ tests:
         id: client.1
         install_packages:
           - ceph-common
-        node: node7
+        nodes:
+          - node10
+          - node16
+          - node17
+          - node18
       desc: "Configure the Cephfs client system 1"
       destroy-cluster: false
       module: test_client.py

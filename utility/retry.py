@@ -20,7 +20,7 @@ def retry(exception_to_check, tries=4, delay=3, backoff=2):
     def deco_retry(f):
         @wraps(f)
         def f_retry(*args, **kwargs):
-            mtries, mdelay = tries, delay
+            mtries, mdelay, mbackoff = tries, delay, backoff
             while mtries > 1:
                 try:
                     return f(*args, **kwargs)

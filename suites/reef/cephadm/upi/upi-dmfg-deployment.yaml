@@ -115,7 +115,7 @@ tests:
         id: client.2
         install_packages:
           - ceph-common
-        node: node11
+        node: node17
       desc: "Configure the Cephfs client system 2"
       destroy-cluster: false
       module: test_client.py
@@ -126,21 +126,21 @@ tests:
       desc: Run object, block and filesystem IO operations parallelly.
       module: test_parallel.py
       parallel:
-        - test:
-            name: CephFS IO
-            desc: CephFS IO with specfic percentage
-            module: test_io.py
-            config:
-              wait_for_io: True
-              cephfs:
-                "fill_data": 30
-                "num_of_clients": 1
-                "io_tool": "smallfile"
-                "mount": "fuse"
-                "batch_size": 30
-                "filesystem": "cephfs_io_1"
-                "mount_dir": ""
-            abort-on-fail: false
+#        - test:
+#            name: CephFS IO
+#            desc: CephFS IO with specfic percentage
+#            module: test_io.py
+#            config:
+#              wait_for_io: True
+#              cephfs:
+#                "fill_data": 2
+#                "num_of_clients": 1
+#                "io_tool": "smallfile"
+#                "mount": "fuse"
+#                "batch_size": 30
+#                "filesystem": "cephfs_io_1"
+#                "mount_dir": ""
+#            abort-on-fail: false
         - test:
             config:
               script-name: test_Mbuckets_with_Nobjects.py

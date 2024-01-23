@@ -23,23 +23,30 @@ function initial_setup {
 function initial_setup_dsal {
   # This function performs initial setup on a given node. It takes two arguments:
   #   node: The name or IP address of the node to perform setup on
+  #   username: The username to use for login (default: "root")
   #   password: The password to set for the root user (default: "passwd")
-  # The function uses sshpass to login to the node with root privileges and sets the root password to the provided value.
-  # It then checks if PermitRootLogin is set to yes in /etc/ssh/sshd_config and if not, adds the setting to the file.
-  # Finally, the sshd service is restarted on the node.
+
   local node="$1"
-  local password="${2:-passwd}"
-  KNOWN_HOSTS_FILE="$HOME/.ssh/known_hosts"
+  local username="${2:-root}"
+  local password="${3:-passwd}"
+  local KNOWN_HOSTS_FILE="$HOME/.ssh/known_hosts"
+
+  # Check if the host key exists in known_hosts file
   if ssh-keygen -F "${node}" -f "$KNOWN_HOSTS_FILE" >/dev/null; then
     echo "Host already exists in known_hosts."
   else
+    # Add the host key to known_hosts file
     ssh-keyscan -H "${node}" >> "$KNOWN_HOSTS_FILE"
   fi
 
-  ssh root@${node} 'echo "passwd" | sudo passwd --stdin root; \
-  grep -qxF "PermitRootLogin yes" /etc/ssh/sshd_config || \
-  echo "PermitRootLogin yes" | sudo tee -a /etc/ssh/sshd_config'
-  ssh root@${node} 'sudo systemctl restart sshd &'
+  # Change root password and update PermitRootLogin in sshd_config
+  sshpass -p "${password}" ssh "${username}@${node}" \
+    'echo "${password}" | sudo passwd --stdin root && \
+    grep -qxF "PermitRootLogin yes" /etc/ssh/sshd_config || \
+    echo "PermitRootLogin yes" | sudo tee -a /etc/ssh/sshd_config'
+
+  # Restart sshd service
+  sshpass -p "${password}" ssh "${username}@${node}" 'sudo systemctl restart sshd &'
   sleep 2
 }
 
@@ -78,7 +85,7 @@ function wipe_drives {
       if [[ "${root_disk}" =~ "${disk}" ]]; then
         continue
       else
-    sshpass -p ${password} ssh ${username}@${node} "wipefs -a --force /dev/${disk}"
+    sshpass -p ${password} ssh ${username}@${node} "sudo wipefs -a --force /dev/${disk}" || true
     fi
     done
 }
@@ -108,3 +115,4 @@ function remove_repos {
     sshpass -p ${password} ssh ${username}@${node} 'sudo rm -f /etc/yum.repos.d/*; sudo yum clean all'
 
   }
+

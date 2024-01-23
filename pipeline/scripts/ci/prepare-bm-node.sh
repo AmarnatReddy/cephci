@@ -31,6 +31,7 @@ NODE_PASSWORD=${PASSWORD:-passwd}
 INITIAL_SETUP=false
 WIPE_DRIVES=false
 SET_HOSTNAMES_REPO=false
+REMOVE_REPO=false
 
 function usage {
     echo "Usage: ${0} [-n | --nodes node1,node2] [--node_username username] [--node_password password] [--wipe_drives] [--set_hostnames_repo] [--remove_repo]"
