@@ -76,6 +76,58 @@ instance:
         permissions: '0644'
         defer: true
       - content: |
+          docker:
+            registry.redhat.io:
+              sigstore: http://repo.qe.ceph.lab/sigstore
+        path: /etc/containers/registries.d/registry.redhat.io.yaml
+        owner: root:root
+        permissions: '0644'
+        defer: true
+      - content: |
+          docker:
+            nginx-vm-01.qe.ceph.lab:5000/rh-prod:
+              sigstore: http://repo.qe.ceph.lab/sigstore
+        path: /etc/containers/registries.d/nginx-mirror-sigstore.yaml
+        owner: root:root
+        permissions: '0644'
+        defer: true
+      - content: |
+          {
+              "default": [
+                  {
+                      "type": "insecureAcceptAnything"
+                  }
+              ],
+              "transports": {
+                  "docker": {
+                      "registry.access.redhat.com": [
+                          {
+                              "type": "signedBy",
+                              "keyType": "GPGKeys",
+                              "keyPath": "/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release"
+                          }
+                      ],
+                      "registry.redhat.io": [
+                          {
+                              "type": "signedBy",
+                              "keyType": "GPGKeys",
+                              "keyPath": "/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release"
+                          }
+                      ]
+                  },
+                  "docker-daemon": {
+                      "": [
+                          {
+                              "type": "insecureAcceptAnything"
+                          }
+                      ]
+                  }
+              }
+          }
+        path: /etc/containers/policy.json
+        owner: root:root
+        permissions: '0644'
+      - content: |
           net.core.default_qdisc=netem
         path: /etc/sysctl.d/1000-qdisc.conf
         owner: root:root
