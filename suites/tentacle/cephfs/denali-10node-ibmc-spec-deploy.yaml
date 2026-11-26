@@ -152,7 +152,7 @@ tests:
           osds: 0
       require_tpm2: false
       rdma_nodes: []
-      deployment_reviewed: false
+      deployment_reviewed: true
       disk_size_gb: 20
 - test:
     name: Bootstrap with all host specifications
