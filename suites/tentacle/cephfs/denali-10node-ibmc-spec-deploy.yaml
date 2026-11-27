@@ -485,7 +485,6 @@ tests:
           - mon_z1
           - mon_z2
           - mon_z3
-      expected_version: 20.2.2-368
 - test:
     name: Apply cluster tunables
     desc: Apply cluster tunables

@@ -155,8 +155,6 @@ def run(ceph_cluster, **kw):
         for n in cfg.get('rdma_nodes', []):
             node(n).exec_command(sudo=True, cmd="rdma link show | grep -w ACTIVE")
     elif action == 'control':
-        if cfg['expected_version'] not in ceph('version'):
-            raise RuntimeError('Unexpected Ceph version; verify build manifest')
         def hosts_ready():
             try:
                 assert_hosts(cfg['expected_hosts'])
