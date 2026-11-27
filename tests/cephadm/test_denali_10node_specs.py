@@ -190,7 +190,9 @@ def run(ceph_cluster, **kw):
         for pool in cfg['pools']:
             name = pool['name']
             if name not in read('osd', 'pool', 'ls'):
-                ceph('osd', 'pool', 'create', name, pool['pg_num'], pool['pg_num'], 'replicated', pool['crush_rule'])
+                # The mon rejects pool names starting with '.' unless explicitly confirmed (as the nfs mgr module does).
+                confirm = ['--yes-i-really-mean-it'] if name.startswith('.') else []
+                ceph('osd', 'pool', 'create', name, pool['pg_num'], pool['pg_num'], 'replicated', pool['crush_rule'], *confirm)
             for key in ('crush_rule', 'size', 'min_size', 'pg_autoscale_mode'):
                 ceph('osd', 'pool', 'set', name, key, pool[key])
             if 'bulk' in pool['flags'].split(','):
