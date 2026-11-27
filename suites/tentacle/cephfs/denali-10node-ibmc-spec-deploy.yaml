@@ -662,12 +662,10 @@ tests:
         spec:
           data_devices:
             size: 18G:23G
-          encrypted: true
           filter_logic: AND
           method: raw
           objectstore: bluestore
           termination_grace_period_seconds: 30
-          tpm2: false
           crush_device_class: ssd
 - test:
     name: Create and validate zone CRUSH rule
