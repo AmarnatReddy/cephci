@@ -66,8 +66,13 @@ def run(ceph_cluster, **kw):
         for n, spec in expected.items():
             h = actual[hostname(n)]
             assert set(h['labels']) == set(spec['labels']), f'Label mismatch: {n}: {h["labels"]}'
-            zone = (h.get('location') or h.get('topological_labels') or {}).get('zone')
-            assert zone == spec['location'].get('zone'), f'Location mismatch: {n}: {h}'
+        # 'orch host ls' does not report the host location; it is applied as a CRUSH bucket.
+        tree = read('osd', 'tree')['nodes']
+        crush_hosts = {h['name']: h['id'] for h in tree if h['type'] == 'host'}
+        zones = {h['name']: set(h['children']) for h in tree if h['type'] == 'zone'}
+        for n, spec in expected.items():
+            zone = spec['location']['zone']
+            assert crush_hosts.get(hostname(n)) in zones.get(zone, set()), f'CRUSH location mismatch: {n} not under {zone}'
 
     def assert_osds(expected):
         tree = read('osd', 'tree')['nodes']
@@ -130,7 +135,7 @@ def run(ceph_cluster, **kw):
             actual = actual_pools[p['name']]
             assert rules[actual['crush_rule']] == p['crush_rule']
             assert actual['size'] == 3 and actual['min_size'] == p['min_size']
-            pool_ids.add(actual['pool'])
+            pool_ids.add(actual['pool_id'])
         dump = read('pg', 'dump', 'pgs')
         pgs = dump.get('pg_stats', dump.get('pg_map', {}).get('pg_stats', []))
         seen = set()
