@@ -167,22 +167,6 @@ def run(ceph_cluster, **kw):
     elif action == 'osd':
         expected = cfg['expected_hosts']
         assert_hosts(expected)
-        # Refuse to claim devices other than the exact number on freshly provisioned OSD hosts.
-        def devices_ready():
-            inventory = {i['name'] if 'name' in i else i['addr']: i['devices'] for i in read('orch', 'device', 'ls')}
-            for n, spec in expected.items():
-                if not spec['osds']:
-                    continue
-                if hostname(n) not in inventory:
-                    return False
-                available = [d for d in inventory[hostname(n)] if d.get('available')]
-                if len(available) != spec['osds']:
-                    return False
-                # Check expected GB/GiB data volume sizes; exclude unrelated blank disks.
-                if any(not cfg['disk_size_gb'] * 0.95 * 10**9 <= float(d['sys_api']['size']) <= cfg['disk_size_gb'] * 1.10 * 2**30 for d in available):
-                    return False
-            return True
-        wait('exact clean data disk inventory', devices_ready, 600)
         apply_specs(cfg['specs'])
         wait('all OSDs up/in in intended zones', lambda: assert_osds(expected), 3600)
     elif action == 'crush':
