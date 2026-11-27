@@ -169,161 +169,164 @@ tests:
             mon-ip: node1
             orphan-initial-daemons: true
             skip-monitoring-stack: true
-            apply-spec:
-            - service_type: host
-              address: true
-              nodes:
-              - node1
-              labels:
-              - zone1
-              - _admin
-              - mon
-              - mgr
-              - mons
-              - osds
-              - mon_z1
-              - mgr_z1
-              - nfsc1
-              - nfsc1_z1
-              - nfsc2
-              - nfsc2_z1
-              location:
-                root: default
-                zone: zone1
-            - service_type: host
-              address: true
-              nodes:
-              - node2
-              labels:
-              - zone1
-              - osds
-              - mds
-              - z1_mds
-              - nfsc3
-              - nfsc3_z1
-              - nfsc4
-              - nfsc4_z1
-              location:
-                root: default
-                zone: zone1
-            - service_type: host
-              address: true
-              nodes:
-              - node3
-              labels:
-              - zone1
-              - mds
-              - z1_mds
-              - nfsc5
-              - nfsc5_z1
-              - nfsc6
-              - nfsc6_z1
-              location:
-                root: default
-                zone: zone1
-            - service_type: host
-              address: true
-              nodes:
-              - node4
-              labels:
-              - zone2
-              - _admin
-              - mon
-              - mgr
-              - mons
-              - osds
-              - mon_z2
-              - mgr_z2
-              - nfsc1
-              - nfsc1_z2
-              - nfsc2
-              - nfsc2_z2
-              location:
-                root: default
-                zone: zone2
-            - service_type: host
-              address: true
-              nodes:
-              - node5
-              labels:
-              - zone2
-              - osds
-              - mds
-              - z2_mds
-              - nfsc3
-              - nfsc3_z2
-              - nfsc4
-              - nfsc4_z2
-              location:
-                root: default
-                zone: zone2
-            - service_type: host
-              address: true
-              nodes:
-              - node6
-              labels:
-              - zone2
-              - mds
-              - z2_mds
-              - nfsc5
-              - nfsc5_z2
-              - nfsc6
-              - nfsc6_z2
-              location:
-                root: default
-                zone: zone2
-            - service_type: host
-              address: true
-              nodes:
-              - node7
-              labels:
-              - zone3
-              - _admin
-              - mon
-              - mgr
-              - mons
-              - osds
-              - mon_z3
-              - mgr_z3
-              - nfsc1
-              - nfsc1_z3
-              - nfsc2
-              - nfsc2_z3
-              location:
-                root: default
-                zone: zone3
-            - service_type: host
-              address: true
-              nodes:
-              - node8
-              labels:
-              - zone3
-              - osds
-              - mds
-              - z3_mds
-              - nfsc3
-              - nfsc3_z3
-              - nfsc4
-              - nfsc4_z3
-              location:
-                root: default
-                zone: zone3
-            - service_type: host
-              address: true
-              nodes:
-              - node9
-              labels:
-              - zone3
-              - mds
-              - z3_mds
-              - nfsc5
-              - nfsc5_z3
-              - nfsc6
-              - nfsc6_z3
-              location:
-                root: default
-                zone: zone3
           service: cephadm
+      - config:
+          command: apply_spec
+          service: orch
+          specs:
+          - service_type: host
+            address: true
+            nodes:
+            - node1
+            labels:
+            - zone1
+            - _admin
+            - mon
+            - mgr
+            - mons
+            - osds
+            - mon_z1
+            - mgr_z1
+            - nfsc1
+            - nfsc1_z1
+            - nfsc2
+            - nfsc2_z1
+            location:
+              root: default
+              zone: zone1
+          - service_type: host
+            address: true
+            nodes:
+            - node2
+            labels:
+            - zone1
+            - osds
+            - mds
+            - z1_mds
+            - nfsc3
+            - nfsc3_z1
+            - nfsc4
+            - nfsc4_z1
+            location:
+              root: default
+              zone: zone1
+          - service_type: host
+            address: true
+            nodes:
+            - node3
+            labels:
+            - zone1
+            - mds
+            - z1_mds
+            - nfsc5
+            - nfsc5_z1
+            - nfsc6
+            - nfsc6_z1
+            location:
+              root: default
+              zone: zone1
+          - service_type: host
+            address: true
+            nodes:
+            - node4
+            labels:
+            - zone2
+            - _admin
+            - mon
+            - mgr
+            - mons
+            - osds
+            - mon_z2
+            - mgr_z2
+            - nfsc1
+            - nfsc1_z2
+            - nfsc2
+            - nfsc2_z2
+            location:
+              root: default
+              zone: zone2
+          - service_type: host
+            address: true
+            nodes:
+            - node5
+            labels:
+            - zone2
+            - osds
+            - mds
+            - z2_mds
+            - nfsc3
+            - nfsc3_z2
+            - nfsc4
+            - nfsc4_z2
+            location:
+              root: default
+              zone: zone2
+          - service_type: host
+            address: true
+            nodes:
+            - node6
+            labels:
+            - zone2
+            - mds
+            - z2_mds
+            - nfsc5
+            - nfsc5_z2
+            - nfsc6
+            - nfsc6_z2
+            location:
+              root: default
+              zone: zone2
+          - service_type: host
+            address: true
+            nodes:
+            - node7
+            labels:
+            - zone3
+            - _admin
+            - mon
+            - mgr
+            - mons
+            - osds
+            - mon_z3
+            - mgr_z3
+            - nfsc1
+            - nfsc1_z3
+            - nfsc2
+            - nfsc2_z3
+            location:
+              root: default
+              zone: zone3
+          - service_type: host
+            address: true
+            nodes:
+            - node8
+            labels:
+            - zone3
+            - osds
+            - mds
+            - z3_mds
+            - nfsc3
+            - nfsc3_z3
+            - nfsc4
+            - nfsc4_z3
+            location:
+              root: default
+              zone: zone3
+          - service_type: host
+            address: true
+            nodes:
+            - node9
+            labels:
+            - zone3
+            - mds
+            - z3_mds
+            - nfsc5
+            - nfsc5_z3
+            - nfsc6
+            - nfsc6_z3
+            location:
+              root: default
+              zone: zone3
       verify_cluster_health: false
 - test:
     name: Verify labels and deploy control plane
