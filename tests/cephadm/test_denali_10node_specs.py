@@ -65,8 +65,9 @@ def run(ceph_cluster, **kw):
         assert set(actual) == {hostname(n) for n in expected}, 'Unexpected/missing hosts'
         for n, spec in expected.items():
             h = actual[hostname(n)]
-            assert set(h['labels']) == set(spec['labels']), f'Label mismatch: {n}'
-            assert h.get('topological_labels', {}).get('zone') == spec['location'].get('zone'), f'Location mismatch: {n}'
+            assert set(h['labels']) == set(spec['labels']), f'Label mismatch: {n}: {h["labels"]}'
+            zone = (h.get('location') or h.get('topological_labels') or {}).get('zone')
+            assert zone == spec['location'].get('zone'), f'Location mismatch: {n}: {h}'
 
     def assert_osds(expected):
         tree = read('osd', 'tree')['nodes']
@@ -159,7 +160,8 @@ def run(ceph_cluster, **kw):
             try:
                 assert_hosts(cfg['expected_hosts'])
                 return True
-            except AssertionError:
+            except AssertionError as e:
+                LOG.info(f'Hosts not ready: {e}')
                 return False
         wait('host registration and labels', hosts_ready, 900)
         apply_specs(cfg['specs'])
